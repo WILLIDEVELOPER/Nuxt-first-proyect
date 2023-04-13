@@ -9,13 +9,16 @@
       >
         PokeDEx
       </h1>
-      <input
+      <div class="text-white ">
+        <input
         class="self-start rounded-md p-[0.3rem] text-black font-bold outline-none"
         type="text"
         v-model="search"
         placeholder="Buscar Pokemon"
         @change="cambiar"
       />
+      <label class="p-[1rem]">{{mensaje}}</label>
+      </div>
       <div id="cards" class="grid grid-cols-4 gap-[1rem]">
         <Card
           :key="index"
@@ -58,6 +61,7 @@ export default {
       response: {},
       search: "",
       loading: true,
+      mensaje: ""
     };
   },
   methods: {
@@ -67,8 +71,11 @@ export default {
         this.$router.push({ path: pokemonFound.name, query: { image: pokemonFound.url } });
       }else{
         this.search = ""
+        this.mensaje = "Pokemon no encontrado"
+        setTimeout(() => {
+          this.mensaje = ""
+        }, 2000);
       }
-      
     },
     async fetch() {
       try {
